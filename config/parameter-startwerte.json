@@ -1,0 +1,40 @@
+{
+  "_hinweis": "Kapitel 8, Startwerte. Änderungen im Tool gelten nur für die laufende Sitzung (TA-06).",
+  "montage_std_tag": 16.6,
+  "_montage_std_tag": "PP-04, zwei Monteure",
+  "produktion_std_tag": 8.3,
+  "_produktion_std_tag": "FA-07, vorläufig, wenn dauer_tage fehlt",
+  "materialvorlauf_tage": 5,
+  "_materialvorlauf_tage": "PP-05, Arbeitstage",
+  "warnschwelle": 0.9,
+  "_warnschwelle": "PP-06",
+  "bedarf_quelle": "durchschnittswert",
+  "_bedarf_quelle": "Offener Punkt 4, Entscheid Prototyp: Durchschnittswert gilt, einsatz_std aus dem Import wird ignoriert. Alternativ 'einsatz'.",
+  "durchschnittswerte": {
+    "_hinweis": "PP-01, Stunden pro Projekt. Reihenfolge der Werte wie 'projektarten'. Quelle Ressourcen-Datei, Betriebszeiten 01.01. bis 23.09.2026.",
+    "projektarten": ["Vertrieb und Projektleitung", "Allgemeine Schreinerarbeiten", "Küchen", "Schränke", "Türen", "Fenster", "Service", "DL Drittfirma"],
+    "werte": {
+      "Arbeitsvorbereitung": [2.06, 2.37, 6.94, 2.60, 1.78, 0.27, 0.16, 0.09],
+      "Ausbildung": [0.24, 0.10, 0, 0, 0, 0, 0, 0],
+      "Bankarbeiten": [0, 2.33, 10.07, 4.83, 2.25, 7.56, 0.20, 1.90],
+      "Bearbeitungscenter": [0, 0.50, 4.14, 1.80, 0.39, 0.15, 0.02, 0.25],
+      "Breitbandschleifen": [0, 0.07, 0.07, 0.14, 0.07, 0.31, 0.00, 0.01],
+      "Einkauf": [0.06, 0.03, 0, 0.03, 0.17, 0.03, 0.00, 0.00],
+      "Fahrzeit": [0.04, 1.18, 2.47, 0.88, 1.20, 0.82, 0.61, 0.81],
+      "Furnierzuschnitt": [0, 0.00, 0, 0, 0, 0, 0, 0],
+      "Kantenleimmaschine": [0, 0.26, 2.80, 1.13, 0.03, 0, 0.02, 0.70],
+      "Lieferung": [0.05, 0.38, 3.56, 1.38, 0.13, 0.47, 0.03, 0.03],
+      "Material Lager": [0, 0, 0.00, 0, 0, 0, 0, 0],
+      "Massivholzzuschnitt": [0, 0.11, 0, 0.03, 0.09, 0, 0.00, 0],
+      "Montage": [0.19, 9.58, 21.45, 5.44, 9.08, 10.07, 1.82, 1.44],
+      "Oberfläche": [0.01, 0.59, 1.26, 0.96, 1.29, 0.35, 0.05, 0.08],
+      "Planung Produktion": [0, 0.00, 0.24, 0.02, 0.02, 0.06, 0, 0],
+      "Plattenzuschnitt": [0, 0.47, 3.19, 1.61, 0.08, 0.01, 0.04, 0.55],
+      "Schlüsseldienst": [0, 0, 0, 0, 0, 0, 0, 0.02],
+      "Standardmaschinen": [0, 0.51, 0.65, 0.26, 0.26, 3.25, 0.03, 0.04],
+      "Unterhalt": [0, 0.01, 0.16, 0, 0.00, 0, 0, 0],
+      "Vertrieb": [2.20, 0.24, 0.81, 0.20, 0.36, 0.03, 0.06, 0.03],
+      "Verwaltung": [0.63, 0.15, 0.30, 0.16, 0.09, 0, 0.02, 0.01]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "_hinweis": "TA-03: Zuordnung Spalten der Importdatei zu Feldern des Datenmodells. Links Feld im Tool, rechts Spaltenname in der Datei. Spaltenliste des echten Triviso-Exports noch offen (offener Punkt 5).",
+  "auftraege": {
+    "_annahme": "Format eine Zeile pro Position und Bereich (offener Punkt 3, Entscheid für Prototyp, im Team zu bestätigen)",
+    "auftrag_nr": "auftrag_nr",
+    "position": "position",
+    "bezeichnung": "bezeichnung",
+    "projektart": "projektart",
+    "status": "status",
+    "bereich": "bereich",
+    "termin": "termin",
+    "dauer_tage": "dauer_tage",
+    "einsatz_std": "einsatz_std"
+  },
+  "mitarbeitende": {
+    "ma_id": "ma_id",
+    "name": "name",
+    "pensum": "pensum",
+    "std_mo": "std_mo",
+    "std_di": "std_di",
+    "std_mi": "std_mi",
+    "std_do": "std_do",
+    "std_fr": "std_fr",
+    "anteil_produktion": "anteil_produktion",
+    "anteil_montage": "anteil_montage",
+    "lernend": "lernend",
+    "lehrjahr": "lehrjahr"
+  },
+  "absenzen": {
+    "absenz_id": "absenz_id",
+    "ma_id": "ma_id",
+    "von": "von",
+    "bis": "bis",
+    "stunden_pro_tag": "stunden_pro_tag",
+    "art": "art"
+  },
+  "maschinen": {
+    "maschine_id": "maschine_id",
+    "bezeichnung": "bezeichnung",
+    "maschinengruppe": "maschinengruppe",
+    "kapazitaet_tag": "kapazitaet_tag",
+    "personalbedarf_tag": "personalbedarf_tag"
+  },
+  "werte": {
+    "bereich": {
+      "Werkstatt": "Produktion",
+      "Produktion": "Produktion",
+      "Montage": "Montage",
+      "Planung": "Vertrieb/Projektleitung"
+    }
+  }
+}

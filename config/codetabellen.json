@@ -1,0 +1,62 @@
+{
+  "_hinweis": "TA-08: Wertelisten. Änderungen hier, nicht im Code.",
+  "bereich": [
+    { "code": "Produktion", "geplant": true },
+    { "code": "Montage", "geplant": true },
+    { "code": "Vertrieb/Projektleitung", "geplant": false }
+  ],
+  "projektart": [
+    "Vertrieb und Projektleitung",
+    "Allgemeine Schreinerarbeiten",
+    "Küchen",
+    "Schränke",
+    "Türen",
+    "Fenster",
+    "Service",
+    "DL Drittfirma"
+  ],
+  "status": [
+    { "code": "10", "bezeichnung": "Offerte", "offerte": true, "annahme": "Vermutung aus Triviso-Bericht, von Läng zu bestätigen (offener Punkt 1)" },
+    { "code": "20", "bezeichnung": "Auftrag bestätigt, noch nicht in Arbeit", "offerte": false, "annahme": "Vermutung, von Läng zu bestätigen" },
+    { "code": "30", "bezeichnung": "In Ausführung", "offerte": false, "annahme": "Vermutung, von Läng zu bestätigen" }
+  ],
+  "absenzart": [
+    "Ferien",
+    "Krankheit",
+    "Dienstpflicht",
+    "Feiertag",
+    "Betriebsferien",
+    "Weiterbildung",
+    "Sonstiges"
+  ],
+  "arbeitsschritt": [
+    { "code": "Arbeitsvorbereitung", "bereich": "Vertrieb/Projektleitung", "maschinengruppe": null },
+    { "code": "Ausbildung", "bereich": "Vertrieb/Projektleitung", "maschinengruppe": null },
+    { "code": "Bankarbeiten", "bereich": "Produktion", "maschinengruppe": null },
+    { "code": "Bearbeitungscenter", "bereich": "Produktion", "maschinengruppe": "BC" },
+    { "code": "Breitbandschleifen", "bereich": "Produktion", "maschinengruppe": "BBS" },
+    { "code": "Einkauf", "bereich": "Vertrieb/Projektleitung", "maschinengruppe": null },
+    { "code": "Fahrzeit", "bereich": "Montage", "maschinengruppe": null },
+    { "code": "Furnierzuschnitt", "bereich": "Produktion", "maschinengruppe": null },
+    { "code": "Kantenleimmaschine", "bereich": "Produktion", "maschinengruppe": "KLM" },
+    { "code": "Lieferung", "bereich": "Montage", "maschinengruppe": null },
+    { "code": "Material Lager", "bereich": "Produktion", "maschinengruppe": null },
+    { "code": "Massivholzzuschnitt", "bereich": "Produktion", "maschinengruppe": null },
+    { "code": "Montage", "bereich": "Montage", "maschinengruppe": null },
+    { "code": "Oberfläche", "bereich": "Produktion", "maschinengruppe": "SPR" },
+    { "code": "Planung Produktion", "bereich": "Vertrieb/Projektleitung", "maschinengruppe": null },
+    { "code": "Plattenzuschnitt", "bereich": "Produktion", "maschinengruppe": "PZ" },
+    { "code": "Schlüsseldienst", "bereich": "Montage", "maschinengruppe": null },
+    { "code": "Standardmaschinen", "bereich": "Produktion", "maschinengruppe": null },
+    { "code": "Unterhalt", "bereich": "Produktion", "maschinengruppe": null },
+    { "code": "Vertrieb", "bereich": "Vertrieb/Projektleitung", "maschinengruppe": null },
+    { "code": "Verwaltung", "bereich": "Vertrieb/Projektleitung", "maschinengruppe": null }
+  ],
+  "maschinengruppe": [
+    { "code": "BC", "bezeichnung": "Bearbeitungscenter" },
+    { "code": "BBS", "bezeichnung": "Breitbandschleifen" },
+    { "code": "KLM", "bezeichnung": "Kantenleimmaschine" },
+    { "code": "SPR", "bezeichnung": "Oberfläche (Spritzraum)" },
+    { "code": "PZ", "bezeichnung": "Plattenzuschnitt" }
+  ]
+}

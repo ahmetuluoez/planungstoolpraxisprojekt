@@ -1,0 +1,48 @@
+:root {
+  --grund: #f7f7f5;
+  --flaeche: #ffffff;
+  --text: #1f2328;
+  --leise: #5f6670;
+  --raster: #e3e5e8;
+  --frei: #4c9a5f;
+  --knapp: #e0a100;
+  --engpass: #c8372d;
+  --offerte: #7a8a9e;
+  --offerte-grund: #e8edf3;
+  --verfuegbar: #1f2328;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--text);
+}
+body { margin: 0; background: var(--grund); }
+main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+h1 { margin: 0; font-size: 1.5rem; }
+h2 { margin: 0 0 8px; font-size: 1.1rem; }
+.untertitel { margin: 4px 0 16px; color: var(--leise); }
+.steuerung { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 12px; }
+.info { color: var(--leise); font-size: 0.85rem; }
+.legende { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; margin-bottom: 12px; }
+.legende span { display: inline-flex; align-items: center; gap: 6px; }
+.kasten { display: inline-block; width: 14px; height: 14px; border-radius: 2px; }
+.kasten.frei { background: var(--frei); }
+.kasten.knapp { background: var(--knapp); }
+.kasten.engpass { background: var(--engpass); }
+.kasten.offerte { background: repeating-linear-gradient(45deg, var(--offerte) 0 3px, var(--offerte-grund) 3px 6px); }
+.linie { display: inline-block; width: 18px; border-top: 2px solid var(--verfuegbar); }
+.diagramm, .import { background: var(--flaeche); border: 1px solid var(--raster); border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; }
+.scroll { overflow-x: auto; }
+svg { width: 100%; min-width: 760px; height: auto; display: block; }
+.raster { stroke: var(--raster); }
+.achse { font-size: 10px; fill: var(--leise); }
+.treffer { fill: transparent; }
+.treffer:hover { fill: rgba(0, 0, 0, 0.04); }
+.balken.frei { fill: var(--frei); }
+.balken.knapp { fill: var(--knapp); }
+.balken.engpass { fill: var(--engpass); }
+.verfuegbar { stroke: var(--verfuegbar); stroke-width: 2; }
+.symbol { font-size: 10px; font-weight: bold; }
+.symbol.knapp { fill: var(--knapp); }
+.symbol.engpass { fill: var(--engpass); }
+.hinweis { font-size: 0.85rem; color: var(--leise); margin: 8px 0 0; }
+table { border-collapse: collapse; margin-top: 12px; font-size: 0.85rem; width: 100%; }
+th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--raster); vertical-align: top; }
+details ul { margin: 4px 0; padding-left: 18px; }

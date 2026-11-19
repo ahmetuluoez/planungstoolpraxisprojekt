@@ -1,0 +1,7 @@
+maschine_id;bezeichnung;maschinengruppe;kapazitaet_tag;personalbedarf_tag
+BC1;Bearbeitungscenter M1;BC;7.5;8.3
+BC2;Bearbeitungscenter M2;BC;7.5;8.3
+BBS;Breitbandschleifen;BBS;8;8.3
+KLM;Kantenleimmaschine;KLM;7;8.3
+SPR;Oberfläche (Spritzraum);SPR;7;8.3
+PZ;Plattenzuschnitt;PZ;8;8.3

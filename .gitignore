@@ -1,0 +1,12 @@
+# Echte Daten von Läng: nie committen
+data/
+
+# Abhängigkeiten und Build
+node_modules/
+dist/
+coverage/
+
+# Lokale Dateien
+.DS_Store
+*.dmg
+.claude/settings.local.json

@@ -118,3 +118,46 @@ table { border-collapse: collapse; margin-top: 16px; font-size: 0.85rem; width: 
 th { font-weight: 600; color: var(--leise); font-size: 0.75rem; }
 th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--raster); vertical-align: top; }
 details ul { margin: 4px 0; padding-left: 18px; }
+
+/* Feinplanung */
+.fein { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.fein.mit-detail { grid-template-columns: minmax(0, 1fr) 340px; }
+@media (max-width: 900px) { .fein.mit-detail { grid-template-columns: minmax(0, 1fr); } }
+.fein-raster { overflow-x: auto; }
+.raster-tabelle { border-collapse: separate; border-spacing: 3px; margin: 0; width: auto; font-variant-numeric: tabular-nums; }
+.raster-tabelle th, .raster-tabelle td { border: 0; padding: 0; }
+.raster-tabelle .kopf-zeile { position: sticky; left: 0; z-index: 1; background: var(--flaeche); min-width: 170px; padding: 6px 10px 6px 0; text-align: left; font-size: 0.85rem; font-weight: 600; }
+.raster-tabelle .kopf-zeile .klein { display: block; font-weight: 400; font-size: 0.75rem; }
+.raster-tabelle .kw { font-size: 0.75rem; color: var(--leise); text-align: left; padding: 0 4px; border-left: 1px solid var(--rand); }
+.raster-tabelle .tag { font-size: 0.72rem; font-weight: 500; color: var(--leise); text-align: center; padding: 2px 0 4px; min-width: 92px; }
+.raster-tabelle .tag span { display: block; }
+.raster-tabelle .tag .wt { text-transform: uppercase; font-size: 0.65rem; letter-spacing: 0.04em; }
+.raster-tabelle .tag.zu { color: #a0a4ab; }
+.raster-tabelle tr.trenn > * { padding-top: 10px; }
+.zelle { border-radius: 8px; min-width: 92px; height: 54px; vertical-align: middle; transition: box-shadow 0.15s; }
+.zelle button { all: unset; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 1px; width: 100%; height: 54px; padding: 4px 8px; cursor: pointer; border-radius: 8px; }
+.zelle button:focus-visible { outline: 2px solid var(--akzent); outline-offset: 1px; }
+.zelle .wert { font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
+.zelle .pz { font-size: 0.72rem; white-space: nowrap; }
+.zelle .off { font-size: 0.65rem; color: var(--leise); white-space: nowrap; }
+.zelle.frei { background: #eaf6ee; color: #1e5e33; }
+.zelle.knapp { background: #fff3dc; color: #7a4d00; }
+.zelle.engpass { background: #ffe5e3; color: #9b1c14; }
+.zelle.geschlossen { background: #eeeff1; color: #8a8f98; display: table-cell; padding: 4px 8px; }
+.zelle.geschlossen .wert, .zelle.geschlossen .pz { display: block; }
+.zelle.an { box-shadow: 0 0 0 2px var(--akzent); }
+.zelle:hover:not(.geschlossen) { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15); }
+.zelle.an:hover { box-shadow: 0 0 0 2px var(--akzent); }
+.fusszeile { margin-top: 10px; }
+.detail-seite { background: var(--grund); border-radius: 12px; padding: 16px; align-self: start; position: sticky; top: 90px; max-height: calc(100vh - 110px); overflow: auto; }
+.detail-titel { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+.detail-titel h3 { margin: 0; font-size: 1rem; }
+.schliessen { all: unset; cursor: pointer; font-size: 1.4rem; line-height: 1; color: var(--leise); padding: 0 4px; }
+.detail-ampel { display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 12px; font-variant-numeric: tabular-nums; }
+.detail-ampel.frei { background: #eaf6ee; color: #1e5e33; }
+.detail-ampel.knapp { background: #fff3dc; color: #7a4d00; }
+.detail-ampel.engpass { background: #ffe5e3; color: #9b1c14; }
+.auftrag-liste { margin-top: 0; font-variant-numeric: tabular-nums; }
+.auftrag-liste .r { text-align: right; }
+.auftrag-liste .nr { font-weight: 600; white-space: nowrap; }
+.auftrag-liste tr.ist-offerte td { color: var(--leise); font-style: italic; }

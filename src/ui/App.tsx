@@ -8,6 +8,8 @@ import { importiereDatei, LEERE_DATEN, type DateiBericht } from '../import/impor
 import { ladeStammdaten, ladeStartparameter } from '../model/konfiguration';
 import type { Daten } from '../model/typen';
 import { pz } from './format';
+import { arbeitstagPruefer } from '../calc/kalender';
+import { Feinplanung } from './Feinplanung';
 import { ImportBereich } from './ImportBereich';
 import { WochenDiagramm } from './WochenDiagramm';
 
@@ -58,6 +60,8 @@ export function App() {
 
   // FA-10: nach jedem Import und jeder Änderung sofort neu berechnen
   const ergebnis = useMemo(() => berechne(daten, param, stamm, stichtag), [daten, stichtag]);
+  const istArbeitstag = useMemo(() => arbeitstagPruefer(daten.absenzen), [daten.absenzen]);
+  const [ansicht, setAnsicht] = useState<'grob' | 'fein'>('grob');
 
   async function importiere(dateien: FileList) {
     let d = daten;
@@ -79,7 +83,15 @@ export function App() {
         <div className="kopf-innen">
           <div>
             <h1>Planungstool Läng</h1>
-            <p className="leise">Grobplanung · 52 Wochen ab Stichtag</p>
+            <p className="leise">{ansicht === 'grob' ? 'Grobplanung · 52 Wochen ab Stichtag' : 'Feinplanung · 2 Monate ab Stichtag'}</p>
+          </div>
+          <div className="umschalter" role="tablist" aria-label="Ansicht">
+            <button role="tab" aria-selected={ansicht === 'grob'} className={ansicht === 'grob' ? 'an' : ''} onClick={() => setAnsicht('grob')}>
+              Grobplanung · 52 Wochen
+            </button>
+            <button role="tab" aria-selected={ansicht === 'fein'} className={ansicht === 'fein' ? 'an' : ''} onClick={() => setAnsicht('fein')}>
+              Feinplanung · 2 Monate
+            </button>
           </div>
           <div className="steuerung">
             <label className="feld">
@@ -118,7 +130,20 @@ export function App() {
           })}
         </section>
 
-        <section className="panel">
+        {ansicht === 'fein' && (
+          <section className="panel">
+            <div className="panel-kopf">
+              <div>
+                <h2>Feinplanung: Stunden pro Tag</h2>
+                <p className="leise">Geplant / verfügbar je Arbeitstag, zwei Monate ab Stichtag.</p>
+              </div>
+            </div>
+            <Feinplanung ergebnis={ergebnis} daten={daten} param={param} stamm={stamm} stichtag={stichtag}
+              istArbeitstag={istArbeitstag} zeigeOfferten={zeigeOfferten} />
+          </section>
+        )}
+
+        {ansicht === 'grob' && <section className="panel">
           <div className="panel-kopf">
             <div>
               <h2>{bereich}: Stunden je Woche</h2>
@@ -148,7 +173,7 @@ export function App() {
             <span><i className="kasten knapp" /> ▲ knapp 90 bis 100 %</span>
             <span><i className="kasten engpass" /> ✖ Engpass über 100 %</span>
           </div>
-        </section>
+        </section>}
 
         <ImportBereich berichte={berichte} daten={daten} onDateien={importiere} />
       </main>

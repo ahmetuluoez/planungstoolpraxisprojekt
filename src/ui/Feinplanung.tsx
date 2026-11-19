@@ -1,6 +1,6 @@
 // Feinplanung (FA-12): Stunden pro Tag, zwei Monate ab Stichtag, eine Spalte pro Arbeitstag.
 // Nur Anzeige: die Werte kommen unverändert aus der Berechnung (calc/auslastung.ts).
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ampel, type Ampel, type Ergebnis } from '../calc/auslastung';
 import { istWerktag, kalenderwoche } from '../calc/datum';
 import type { IstArbeitstag } from '../calc/kalender';
@@ -49,6 +49,11 @@ function zweiMonate(stichtag: string): string {
 
 export function Feinplanung({ ergebnis, daten, param, stamm, stichtag, istArbeitstag, zeigeOfferten }: Props) {
   const [auswahl, setAuswahl] = useState<{ zeile: string; datum: string } | null>(null);
+  const detailRef = useRef<HTMLElement>(null);
+  // Auf schmalen Bildschirmen steht das Detail unter dem Raster: dann sichtbar machen
+  useEffect(() => {
+    if (auswahl && window.matchMedia('(max-width: 960px)').matches) detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, [auswahl]);
 
   const zeilen: Zeile[] = useMemo(() => {
     const bereiche = stamm.geplanteBereiche.map((b) => ({ id: b, label: b, ressource: b, anteil: 1, maschine: false }));
@@ -89,7 +94,8 @@ export function Feinplanung({ ergebnis, daten, param, stamm, stichtag, istArbeit
     return m;
   }, [ergebnis]);
   const auftragInfo = useMemo(() => new Map(daten.auftraege.map((a) => [a.auftrag_nr, a])), [daten.auftraege]);
-  const statusText = new Map(stamm.status.map((s) => [s.code, s.bezeichnung]));
+  // Kurzform für die schmale Liste, z. B. «Auftrag bestätigt»
+  const statusText = new Map(stamm.status.map((s) => [s.code, s.bezeichnung.split(',')[0]]));
 
   // Wochengruppen für die Kopfzeile
   const wochen: { label: string; anzahl: number }[] = [];
@@ -148,7 +154,7 @@ export function Feinplanung({ ergebnis, daten, param, stamm, stichtag, istArbeit
               <tr key={z.id} className={z.maschine && !zeilen[zi - 1]?.maschine ? 'trenn' : ''}>
                 <th className="kopf-zeile">
                   {z.label}
-                  {z.maschine && <span className="leise klein">{z.id}</span>}
+                  {z.maschine && <span className="hilfe klein">{z.id}</span>}
                 </th>
                 {tage.map((t) => {
                   const c = zelle(z, t.datum);
@@ -179,18 +185,18 @@ export function Feinplanung({ ergebnis, daten, param, stamm, stichtag, istArbeit
             ))}
           </tbody>
         </table>
-        <p className="leise fusszeile">
-          Wochenenden ausgeblendet. Zelle anklicken für die Aufträge des Tages.
+        <p className="hilfe fusszeile">
+          Wochenenden ausgeblendet, Feiertage und Betriebsferien grau.
           Annahme: Bearbeitungscenter M1 und M2 teilen sich die Stunden der Gruppe BC nach Kapazität.
         </p>
       </div>
 
       {detail && (
-        <aside className="detail-seite">
+        <aside className="detail-seite" ref={detailRef}>
           <div className="detail-titel">
             <div>
               <h3>{detail.z.label}</h3>
-              <p className="leise">{datumLang(auswahl!.datum)}</p>
+              <p className="hilfe">{datumLang(auswahl!.datum)}</p>
             </div>
             <button className="schliessen" onClick={() => setAuswahl(null)} aria-label="Detail schliessen">×</button>
           </div>
@@ -199,7 +205,7 @@ export function Feinplanung({ ergebnis, daten, param, stamm, stichtag, istArbeit
             <strong>{h1(detail.c.geplant)} / {h1(detail.c.verfuegbar)} h</strong>
           </div>
           {detail.liste.length === 0 ? (
-            <p className="leise">Keine Aufträge an diesem Tag.</p>
+            <p className="hilfe">Keine Aufträge an diesem Tag.</p>
           ) : (
             <table className="auftrag-liste">
               <thead><tr><th>Auftrag</th><th>Projektart</th><th>Status</th><th className="r">Std.</th></tr></thead>

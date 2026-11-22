@@ -39,7 +39,7 @@ const heute = new Date().toISOString().slice(0, 10);
 type Ansicht = 'grob' | 'fein' | 'daten';
 const ANSICHTEN: { id: Ansicht; label: string; titel: string; untertitel: string }[] = [
   { id: 'grob', label: 'Grobplanung · 52 Wochen', titel: 'Grobplanung', untertitel: 'Stunden je Woche, 52 Wochen ab Stichtag' },
-  { id: 'fein', label: 'Feinplanung · 2 Monate', titel: 'Feinplanung', untertitel: 'Stunden pro Arbeitstag, zwei Monate ab Stichtag' },
+  { id: 'fein', label: 'Feinplanung · 2 Monate', titel: 'Feinplanung', untertitel: 'Stunden pro Arbeitstag, zwei Monate ab Stichtag. Tag im Kalender wählen.' },
   { id: 'daten', label: 'Daten', titel: 'Daten', untertitel: 'Geladene Daten und Import von CSV-Dateien' },
 ];
 
@@ -170,16 +170,8 @@ export function App() {
         )}
 
         {ansicht === 'fein' && (
-          <section className="karte">
-            <div className="karte-kopf">
-              <div>
-                <h2>Stunden pro Tag</h2>
-                <p className="hilfe">Geplant / verfügbar je Arbeitstag. Zelle anklicken für die Aufträge des Tages.</p>
-              </div>
-            </div>
-            <Feinplanung ergebnis={ergebnis} daten={daten} param={param} stamm={stamm} stichtag={stichtag}
-              istArbeitstag={istArbeitstag} zeigeOfferten={zeigeOfferten} />
-          </section>
+          <Feinplanung ergebnis={ergebnis} daten={daten} param={param} stamm={stamm} stichtag={stichtag}
+            istArbeitstag={istArbeitstag} zeigeOfferten={zeigeOfferten} />
         )}
 
         {ansicht === 'daten' && <ImportBereich berichte={berichte} daten={daten} onDateien={importiere} />}

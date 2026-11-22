@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react';
+import { startTransition, useDeferredValue, useMemo, useState } from 'react';
 import absenzenCsv from '../../testdata/absenzen.csv?raw';
 import auftraegeCsv from '../../testdata/auftraege.csv?raw';
 import maschinenCsv from '../../testdata/maschinen.csv?raw';
 import mitarbeitendeCsv from '../../testdata/mitarbeitende.csv?raw';
 import { berechne, type Ampel, type Periode } from '../calc/auslastung';
-import { zuZahl } from '../calc/datum';
+import { istGueltigesDatum, zuZahl } from '../calc/datum';
 import { arbeitstagPruefer } from '../calc/kalender';
 import { importiereDatei, LEERE_DATEN, type DateiBericht } from '../import/import';
 import { ladeStammdaten, ladeStartparameter } from '../model/konfiguration';
@@ -60,7 +60,16 @@ export function App() {
   const [ansicht, setAnsicht] = useState<Ansicht>('grob');
 
   // FA-10: nach jedem Import und jeder Änderung sofort neu berechnen
-  const ergebnis = useMemo(() => berechne(daten, param, stamm, stichtag), [daten, stichtag]);
+  // Stichtag: Eingabe sofort anzeigen, Neuberechnung erst bei gültigem Datum und zurückgestellt,
+  // damit die Eingabe nie blockiert (z. B. Jahr 0002 während des Tippens).
+  const [eingabe, setEingabe] = useState(heute);
+  const stichtagBerechnung = useDeferredValue(stichtag);
+  function stichtagEingabe(wert: string) {
+    setEingabe(wert);
+    const jahr = Number(wert.slice(0, 4));
+    if (istGueltigesDatum(wert) && jahr >= 2000 && jahr <= 2100) startTransition(() => setStichtag(wert));
+  }
+  const ergebnis = useMemo(() => berechne(daten, param, stamm, stichtagBerechnung), [daten, stichtagBerechnung]);
   const istArbeitstag = useMemo(() => arbeitstagPruefer(daten.absenzen), [daten.absenzen]);
 
   async function importiere(dateien: FileList) {
@@ -99,7 +108,7 @@ export function App() {
           <div className="steuerung">
             <label className="feld">
               <span>Stichtag</span>
-              <input type="date" value={stichtag} onChange={(e) => e.target.value && setStichtag(e.target.value)} />
+              <input type="date" value={eingabe} min="2000-01-01" max="2100-12-31" onChange={(e) => stichtagEingabe(e.target.value)} />
             </label>
             <label className="schalter">
               <input type="checkbox" checked={zeigeOfferten} onChange={(e) => setZeigeOfferten(e.target.checked)} />
@@ -170,7 +179,7 @@ export function App() {
         )}
 
         {ansicht === 'fein' && (
-          <Feinplanung ergebnis={ergebnis} daten={daten} param={param} stamm={stamm} stichtag={stichtag}
+          <Feinplanung ergebnis={ergebnis} daten={daten} param={param} stamm={stamm} stichtag={stichtagBerechnung}
             istArbeitstag={istArbeitstag} zeigeOfferten={zeigeOfferten} />
         )}
 

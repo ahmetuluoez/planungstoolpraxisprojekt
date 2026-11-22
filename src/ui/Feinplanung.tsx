@@ -1,7 +1,7 @@
 // Feinplanung (FA-12): Stunden pro Tag, zwei Monate ab Stichtag.
 // Links ein Kalender zum Wählen des Tages, rechts gross alle Ressourcen und Aufträge dieses Tages (FA-15).
 // Nur Anzeige: die Werte kommen unverändert aus der Berechnung (calc/auslastung.ts).
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ampel, type Ampel, type Ergebnis } from '../calc/auslastung';
 import { istWerktag, kalenderwoche, montagDerWoche, plusTage, tageZwischen } from '../calc/datum';
 import type { IstArbeitstag } from '../calc/kalender';
@@ -56,14 +56,13 @@ export function Feinplanung({ ergebnis, daten, param, stamm, stichtag, istArbeit
     [stichtag, bis],
   );
   const erster = werktage.find(istArbeitstag) ?? werktage[0];
-  const [tag, setTag] = useState(erster);
+  const [gewaehlterTag, setTag] = useState(erster);
   const [zeileId, setZeileId] = useState<string>(stamm.geplanteBereiche[0]);
   const [markierung, setMarkierung] = useState<string>('alle');
 
-  // Stichtag geändert: gewählten Tag in den Zeitraum holen
-  useEffect(() => {
-    if (!werktage.includes(tag)) setTag(erster);
-  }, [werktage, tag, erster]);
+  // Liegt der gewählte Tag nach einer Stichtagänderung nicht mehr im Zeitraum, gilt der erste Arbeitstag.
+  // Im selben Render abgeleitet (nicht per useEffect), sonst fehlen für einen Render die Werte des Tages.
+  const tag = werktage.includes(gewaehlterTag) ? gewaehlterTag : erster;
 
   const zeilen: Zeile[] = useMemo(() => {
     const bereiche = stamm.geplanteBereiche.map((b) => ({ id: b, label: b, kurz: b, ressource: b, anteil: 1, maschine: false }));
@@ -144,10 +143,15 @@ export function Feinplanung({ ergebnis, daten, param, stamm, stichtag, istArbeit
   }, [stichtag, bis]);
 
   const idx = werktage.indexOf(tag);
-  const blaettern = (schritt: number) => {
-    const n = werktage[idx + schritt];
-    if (n) setTag(n);
-  };
+  // Stabil: hängt nur von den Werktagen ab, nicht vom gewählten Tag
+  const blaettern = useCallback((schritt: number) => {
+    setTag((t) => {
+      const i = werktage.indexOf(t);
+      if (i < 0) return werktage.find(istArbeitstag) ?? werktage[0];
+      return werktage[i + schritt] ?? t;
+    });
+  }, [werktage, istArbeitstag]);
+  // Pfeiltasten: Listener nur neu anmelden, wenn sich der Zeitraum ändert
   useEffect(() => {
     const taste = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement).tagName === 'INPUT' || (e.target as HTMLElement).tagName === 'SELECT') return;
@@ -156,7 +160,7 @@ export function Feinplanung({ ergebnis, daten, param, stamm, stichtag, istArbeit
     };
     window.addEventListener('keydown', taste);
     return () => window.removeEventListener('keydown', taste);
-  });
+  }, [blaettern]);
 
   const offen = istArbeitstag(tag);
   const gewaehlt = zeilen.find((z) => z.id === zeileId) ?? zeilen[0];

@@ -134,7 +134,8 @@ export function Feinplanung({ ergebnis, daten, param, stamm, stichtag, istArbeit
           const d = plusTage(mon, i);
           return d.slice(0, 7) === m ? d : null;
         });
-        if (tage.some(Boolean)) wochen.push({ kw: kalenderwoche(mon).kw, tage });
+        // nur Wochen mit mindestens einem Tag im Zeitraum, damit der Kalender kompakt bleibt
+        if (tage.some((d) => d && d >= stichtag && d <= bis)) wochen.push({ kw: kalenderwoche(mon).kw, tage });
       }
       out.push({ titel: alsDatum(erster).toLocaleDateString('de-CH', { month: 'long', year: 'numeric' }), wochen });
       m = new Date(Date.UTC(j, mo, 1)).toISOString().slice(0, 7);

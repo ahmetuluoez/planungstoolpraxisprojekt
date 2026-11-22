@@ -149,11 +149,12 @@ main { max-width: 1240px; margin: 0 auto; padding: 28px 24px 64px; display: grid
 
 /* Feinplanung: Kalender links, Tagesdetail rechts */
 .kalender-layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 20px; align-items: start; }
-@media (max-width: 900px) {
-  .kalender-layout { grid-template-columns: minmax(0, 1fr); }
-  .kalender { position: static; max-height: none; }
+/* Eigener Stapelkontext mit weissem Grund: nichts aus dem Tagesdetail wird darüber gezeichnet.
+   Innerer Scrollbereich nur, wenn der Kalender nicht in die Fensterhöhe passt. */
+.kalender {
+  position: sticky; top: 76px; z-index: 1; background: var(--flaeche);
+  padding: 16px 16px 12px; display: grid; gap: 14px; max-height: calc(100vh - 96px); overflow-y: auto;
 }
-.kalender { position: sticky; top: 76px; padding: 18px 18px 14px; display: grid; gap: 18px; max-height: calc(100vh - 96px); overflow: auto; }
 .markierung { display: grid; gap: 4px; }
 .markierung select {
   font: inherit; font-size: 13px; color: var(--text); padding: 6px 8px; border: 0; border-radius: 8px;
@@ -166,7 +167,7 @@ main { max-width: 1240px; margin: 0 auto; padding: 28px 24px 64px; display: grid
 .kw-kopf, .wt-kopf { font-size: 11px; color: var(--hilfe); text-align: center; padding-bottom: 2px; }
 .kw-nr { font-size: 11px; color: #aeaeb2; display: flex; align-items: center; justify-content: center; font-variant-numeric: tabular-nums; }
 .kal-tag {
-  border: 0; font: inherit; cursor: pointer; border-radius: 10px; height: 44px; padding: 4px 0;
+  border: 0; font: inherit; cursor: pointer; border-radius: 10px; height: 40px; padding: 3px 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
   background: transparent; color: var(--text); transition: background var(--schnell), box-shadow var(--schnell);
 }
@@ -229,6 +230,11 @@ main { max-width: 1240px; margin: 0 auto; padding: 28px 24px 64px; display: grid
 .auftraege-kopf { display: flex; align-items: baseline; gap: 10px; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--trenn); }
 .liste .nr { font-weight: 600; white-space: nowrap; }
 .liste tr.ist-offerte td { color: var(--hilfe); }
+/* Media Queries der Feinplanung stehen hinter den Basisregeln, damit sie greifen */
+@media (max-width: 900px) {
+  .kalender-layout { grid-template-columns: minmax(0, 1fr); }
+  .kalender { position: static; max-height: none; overflow: visible; }
+}
 @media (max-width: 720px) {
   .ressource { grid-template-columns: 1fr auto; }
   .r-stunden { text-align: left; }
